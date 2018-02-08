@@ -11,7 +11,17 @@ from PyQt5.QtCore import *
 class InputWindow(QWidget):
     def __init__(self):
         super().__init__()
+        self.setAcceptDrops(True)
         self.initUI()
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.accept()
+        else:
+            event.ignore()
+
+    def dropEvent(self, QDropEvent):
+        return super().dropEvent(QDropEvent)
 
     def initUI(self):
 
@@ -19,11 +29,15 @@ class InputWindow(QWidget):
         grid = QVBoxLayout()
 
         # Labelオブジェクト
-        howToUse1Label = QLabel('1. ')
-
-        # CheckBoxオブジェクト
-        headerCheckBox = QCheckBox('ヘッダーあり', self)
-        headerCheckBox.toggle()
+        howToUse1Label = QLabel('1. csvファイルのみ扱い可能. ')
+        howToUse2Label = QLabel('2. ヘッダーで次のようにカラム名をつける. ')
+        howToUse3Label = QLabel('       横軸（CANデータから算出した総消費電力量）: x  ')
+        howToUse4Label = QLabel('       縦軸1（走行による推定消費電力量）: y1  ')
+        howToUse5Label = QLabel('       縦軸2（電装品による推定消費電力量）: y2  ')
+        howToUse6Label = QLabel('       縦軸3（エアコンによる推定消費電力量）: y3  ')
+        howToUse7Label = QLabel('3. csvファイルをウィンドウ内にドラッグ&ドロップ. ')
+        howToUse8Label = QLabel('4. 回帰直線を選ぶ. ')
+        howToUse9Label = QLabel('5. Outputボタンをクリックするとグラフが出力される. ')
 
         # RadioButtonオブジェクト
         self.regLine1RadioButton = QRadioButton("なし")
@@ -36,9 +50,6 @@ class InputWindow(QWidget):
         outPutButton.resize(outPutButton.sizeHint())
         outPutButton.clicked.connect(self.outPutButtonClicked)
 
-        # TextEditオブジェクト
-        self.howToUseTextEdit = QTextEdit(self)
-
         # 回帰直線を指定するWidgetグループ
         self.regLineGroupBox = QGroupBox("回帰直線")
         regLineBox = QVBoxLayout()
@@ -50,9 +61,17 @@ class InputWindow(QWidget):
         # How to Use関連のwidgetグループ
         self.howToUseGroupBox = QGroupBox("How to Use")
         howToUseBox = QVBoxLayout()
+        howToUseBox.addWidget(howToUse1Label)
+        howToUseBox.addWidget(howToUse2Label)
+        howToUseBox.addWidget(howToUse3Label)
+        howToUseBox.addWidget(howToUse4Label)
+        howToUseBox.addWidget(howToUse5Label)
+        howToUseBox.addWidget(howToUse6Label)
+        howToUseBox.addWidget(howToUse7Label)
+        howToUseBox.addWidget(howToUse8Label)
+        howToUseBox.addWidget(howToUse9Label)
         self.howToUseGroupBox.setLayout(howToUseBox)
         
-        grid.addWidget(headerCheckBox)
         grid.addWidget(self.regLineGroupBox)
         grid.addWidget(outPutButton)
         grid.addWidget(self.howToUseGroupBox)
