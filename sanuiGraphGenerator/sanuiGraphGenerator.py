@@ -99,7 +99,7 @@ class InputWindow(QWidget):
         data = df.values
 
         xi = df['x'].T
-        yi = df['y1'].T + df.['y2'] + df.['y3'].T
+        yi = df['y1'].T + df['y2'] + df['y3'].T
         sum_xx = sum(xi ** 2)
         sum_xy = sum(xi * yi)
         slope = sum_xy / sum_xx
