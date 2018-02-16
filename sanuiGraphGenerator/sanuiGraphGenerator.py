@@ -130,6 +130,8 @@ class InputWindow(QWidget):
             ax.add_line(regLine_2sigma)
             ax.add_line(regLine_minus_sigma)
             ax.add_line(regLine_minus_2sigma)
+            print("回帰直線の傾き = " + str(round(slope, 3)))
+            print("回帰直線との標準偏差 = " + str(round(sigma, 3)))
 
         plt.xlim([0, 10])
         plt.ylim([0, 10])
